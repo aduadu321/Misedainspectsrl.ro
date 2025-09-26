@@ -16,7 +16,8 @@
     "deploy:cpanel": "ts-node --project tsconfig.server.json scripts/deployToCpanel.ts",
     "zip:deploy": "node -e \"try{require('fs').rmSync('itp-notification-deploy.zip',{force:true});}catch(e){}\" && bestzip itp-notification-deploy.zip deploy/*",
     "zip:frontend": "node -e \"try{require('fs').rmSync('itp-frontend-public.zip',{force:true});}catch(e){}\" && bestzip itp-frontend-public.zip deploy/frontend_package/*",
-    "zip:build": "npm run build:all && node -e \"try{require('fs').rmSync('build-package.zip',{force:true});}catch(e){}\" && bestzip build-package.zip build/*"
+    "zip:build": "npm run build:all && node -e \"try{require('fs').rmSync('build-package.zip',{force:true});}catch(e){}\" && bestzip build-package.zip build/*",
+    "zip:frontend-only": "npm run build && node -e \"try{require('fs').rmSync('frontend-only.zip',{force:true});}catch(e){}\" && bestzip frontend-only.zip dist/*"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

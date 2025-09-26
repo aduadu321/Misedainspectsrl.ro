@@ -1,0 +1,28 @@
+---
+deployment:
+  tasks:
+    # Set deployment paths for MISEDA INSPECT SRL hosting
+    - export DEPLOYPATH=/home/aduadu321/public_html/
+    - export APPPATH=/home/aduadu321/itp-notification/
+    
+    # Create necessary directories
+    - mkdir -p $APPPATH
+    - mkdir -p $DEPLOYPATH
+    
+    # Deploy backend application files
+    - /bin/cp -R dist-server/* $APPPATH
+    - /bin/cp package.json $APPPATH
+    - /bin/cp database/schema.sql $APPPATH
+    
+    # Deploy frontend static files to public_html
+    - /bin/cp -R dist/* $DEPLOYPATH
+    
+    # Install production dependencies for backend
+    - cd $APPPATH && npm ci --omit=dev
+    
+    # Set proper permissions
+    - chmod -R 755 $DEPLOYPATH
+    - chmod -R 755 $APPPATH
+    
+    # Restart Node.js application (if supported by hosting)
+    - echo "Deployment completed for ITP NOTIFICATION - MISEDA INSPECT SRL"

@@ -10,21 +10,22 @@ deployment:
     - mkdir -p $DEPLOYPATH
     
     # Build and create deployment packages
-    - npm run build
-    - npm run server:build || npx tsc --project tsconfig.server.json
-    - npm run zip:deploy
-    - npm run zip:frontend
+    - npm run build:all
+    - npm run zip:build
     
-    # Deploy from zip archives
-    - cd $APPPATH && unzip -o ../../../itp-notification-deploy.zip
-    - cd $DEPLOYPATH && unzip -o ../../../itp-frontend-public.zip
+    # Deploy from build archive
+    - cd /home/aduadu321 && unzip -o build-package.zip
+    - /bin/cp -R build/backend/* $APPPATH
+    - /bin/cp -R build/frontend/* $DEPLOYPATH
+    - /bin/cp package.json $APPPATH
+    - /bin/cp database/schema.sql $APPPATH
     
     # Install production dependencies for backend
     - cd $APPPATH && npm ci --omit=dev
     
-    # Clean up zip files
-    - rm -f /home/aduadu321/itp-notification-deploy.zip
-    - rm -f /home/aduadu321/itp-frontend-public.zip
+    # Clean up build files
+    - rm -f /home/aduadu321/build-package.zip
+    - rm -rf /home/aduadu321/build
     
     # Set proper permissions
     - chmod -R 755 $DEPLOYPATH
